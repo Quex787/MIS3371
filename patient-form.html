@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<!--
+  Program name: patient-form.html
+  Author: [Your Name as it appears in UH roster]
+  Date created: [Date you started]
+  Date last edited: [Date you submitted]
+  Version: 1.0
+  Description: Patient registration form for 2nd Colony Health Center.
+               Captures demographic and medical history data for new patients.
+               Uses an external stylesheet (style.css) for all major styling.
+               Form submits to thankyou.html upon successful completion.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2nd Colony Health Center &ndash; Patient Registration</title>
+
+  <!-- External CSS file (required) -->
+  <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<!-- ===================================================================
+     BANNER / HEADER DIVISION
+     =================================================================== -->
+<div id="banner">
+
+  <!-- Logo area: inline SVG so no external image file needed -->
+  <div id="banner-logo-area">
+
+    <!-- SVG logo: medical cross inside a circle -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"
+         aria-label="2nd Colony Health Center logo" role="img">
+      <circle cx="30" cy="30" r="29" fill="#2e9e6b" stroke="#ffffff" stroke-width="2"/>
+      <!-- Horizontal bar of cross -->
+      <rect x="14" y="25" width="32" height="10" rx="2" fill="#ffffff"/>
+      <!-- Vertical bar of cross -->
+      <rect x="25" y="14" width="10" height="32" rx="2" fill="#ffffff"/>
+    </svg>
+
+    <div>
+      <div id="banner-title">2nd Colony Health Center</div>
+      <div id="banner-subtitle">Patient Registration Portal</div>
+    </div>
+  </div>
+
+  <!-- Dynamic date via inline JavaScript (required) -->
+  <div id="banner-date">
+    Today is:&nbsp;
+    <script>
+      /* Inline JS to display the current day and date dynamically */
+      (function () {
+        var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var months = ['January','February','March','April','May','June',
+                      'July','August','September','October','November','December'];
+        var now    = new Date();
+        var day    = days[now.getDay()];
+        var month  = months[now.getMonth()];
+        var date   = now.getDate();
+        var year   = now.getFullYear();
+        /* Ordinal suffix: 1st, 2nd, 3rd, etc. */
+        var suffix = 'th';
+        if (date === 1 || date === 21 || date === 31) suffix = 'st';
+        else if (date === 2 || date === 22)           suffix = 'nd';
+        else if (date === 3 || date === 23)           suffix = 'rd';
+        document.write(day + ', ' + month + ' ' + date + suffix + ', ' + year);
+      }());
+    </script>
+  </div>
+
+</div>
+<!-- END BANNER -->
+
+
+<!-- ===================================================================
+     MAIN CONTENT / FORM DIVISION
+     =================================================================== -->
+<div id="page-wrapper">
+
+  <div id="form-container">
+
+    <h1>New Patient Registration</h1>
+    <p>Please complete all required fields (<span class="required">*</span>) and click <strong>Submit</strong> when finished.</p>
+
+    <!-- action goes to thankyou.html; no method attribute (client-side only) -->
+    <form action="thankyou.html">
+
+      <!-- -------------------------------------------------------
+           SECTION 1 — PERSONAL INFORMATION
+           ------------------------------------------------------- -->
+      <div class="section-heading">1. Personal Information</div>
+
+      <table class="form-table">
+        <tbody>
+
+          <!-- First Name / Middle Initial / Last Name on one row -->
+          <tr>
+            <td class="label-cell">First Name <span class="required">*</span></td>
+            <td>
+              <input class="form-input medium" type="text" id="fname" name="fname"
+                     maxlength="30" placeholder="First name" required />
+              &nbsp;
+              <label for="mi" style="font-weight:bold;">MI</label>&nbsp;
+              <input class="form-input short" type="text" id="mi" name="mi"
+                     maxlength="1" placeholder="M" style="width:46px;" />
+              &nbsp;
+              <label for="lname" style="font-weight:bold;">Last Name <span class="required">*</span></label>&nbsp;
+              <input class="form-input medium" type="text" id="lname" name="lname"
+                     maxlength="30" placeholder="Last name" required />
+            </td>
+          </tr>
+
+          <!-- Date of Birth -->
+          <tr>
+            <td class="label-cell">Date of Birth <span class="required">*</span></td>
+            <td>
+              <input class="form-input" type="text" id="dob" name="dob"
+                     maxlength="10" placeholder="MM/DD/YYYY"
+                     pattern="\d{2}/\d{2}/\d{4}" required />
+              <span class="field-note">MM/DD/YYYY</span>
+            </td>
+          </tr>
+
+          <!-- Social Security Number -->
+          <tr>
+            <td class="label-cell">Social Security # <span class="required">*</span></td>
+            <td>
+              <input class="form-input" type="password" id="ssn" name="ssn"
+                     minlength="9" maxlength="11" placeholder="XXX-XX-XXXX" required />
+              <span class="field-note">Obscured for security. Format: XXX-XX-XXXX</span>
+            </td>
+          </tr>
+
+          <!-- Email -->
+          <tr>
+            <td class="label-cell">Email Address <span class="required">*</span></td>
+            <td>
+              <input class="form-input long" type="email" id="email" name="email"
+                     maxlength="80" placeholder="name@domain.com" required />
+            </td>
+          </tr>
+
+          <!-- Phone -->
+          <tr>
+            <td class="label-cell">Phone Number</td>
+            <td>
+              <input class="form-input" type="tel" id="phone" name="phone"
+                     maxlength="14" placeholder="(555) 555-5555" />
+              <span class="field-note">Format: (555) 555-5555</span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           SECTION 2 — ADDRESS
+           ------------------------------------------------------- -->
+      <div class="section-heading">2. Address</div>
+
+      <table class="form-table">
+        <tbody>
+
+          <tr>
+            <td class="label-cell">Address Line 1 <span class="required">*</span></td>
+            <td>
+              <input class="form-input full" type="text" id="addr1" name="addr1"
+                     maxlength="30" placeholder="Street address" required />
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label-cell">Address Line 2</td>
+            <td>
+              <input class="form-input full" type="text" id="addr2" name="addr2"
+                     maxlength="30" placeholder="Apt, Suite, Unit (optional)" />
+            </td>
+          </tr>
+
+          <!-- City / State / Zip on one row -->
+          <tr>
+            <td class="label-cell">City <span class="required">*</span></td>
+            <td>
+              <input class="form-input medium" type="text" id="city" name="city"
+                     maxlength="30" placeholder="City" required />
+
+              &nbsp;
+              <label for="state" style="font-weight:bold;">State <span class="required">*</span></label>&nbsp;
+              <!-- All 50 states + DC + PR dropdown -->
+              <select class="form-select" id="state" name="state" required>
+                <option value="">-- Select --</option>
+                <option value="AL">AL &ndash; Alabama</option>
+                <option value="AK">AK &ndash; Alaska</option>
+                <option value="AZ">AZ &ndash; Arizona</option>
+                <option value="AR">AR &ndash; Arkansas</option>
+                <option value="CA">CA &ndash; California</option>
+                <option value="CO">CO &ndash; Colorado</option>
+                <option value="CT">CT &ndash; Connecticut</option>
+                <option value="DE">DE &ndash; Delaware</option>
+                <option value="DC">DC &ndash; District of Columbia</option>
+                <option value="FL">FL &ndash; Florida</option>
+                <option value="GA">GA &ndash; Georgia</option>
+                <option value="HI">HI &ndash; Hawaii</option>
+                <option value="ID">ID &ndash; Idaho</option>
+                <option value="IL">IL &ndash; Illinois</option>
+                <option value="IN">IN &ndash; Indiana</option>
+                <option value="IA">IA &ndash; Iowa</option>
+                <option value="KS">KS &ndash; Kansas</option>
+                <option value="KY">KY &ndash; Kentucky</option>
+                <option value="LA">LA &ndash; Louisiana</option>
+                <option value="ME">ME &ndash; Maine</option>
+                <option value="MD">MD &ndash; Maryland</option>
+                <option value="MA">MA &ndash; Massachusetts</option>
+                <option value="MI">MI &ndash; Michigan</option>
+                <option value="MN">MN &ndash; Minnesota</option>
+                <option value="MS">MS &ndash; Mississippi</option>
+                <option value="MO">MO &ndash; Missouri</option>
+                <option value="MT">MT &ndash; Montana</option>
+                <option value="NE">NE &ndash; Nebraska</option>
+                <option value="NV">NV &ndash; Nevada</option>
+                <option value="NH">NH &ndash; New Hampshire</option>
+                <option value="NJ">NJ &ndash; New Jersey</option>
+                <option value="NM">NM &ndash; New Mexico</option>
+                <option value="NY">NY &ndash; New York</option>
+                <option value="NC">NC &ndash; North Carolina</option>
+                <option value="ND">ND &ndash; North Dakota</option>
+                <option value="OH">OH &ndash; Ohio</option>
+                <option value="OK">OK &ndash; Oklahoma</option>
+                <option value="OR">OR &ndash; Oregon</option>
+                <option value="PA">PA &ndash; Pennsylvania</option>
+                <option value="PR">PR &ndash; Puerto Rico</option>
+                <option value="RI">RI &ndash; Rhode Island</option>
+                <option value="SC">SC &ndash; South Carolina</option>
+                <option value="SD">SD &ndash; South Dakota</option>
+                <option value="TN">TN &ndash; Tennessee</option>
+                <option value="TX" selected>TX &ndash; Texas</option>
+                <option value="UT">UT &ndash; Utah</option>
+                <option value="VT">VT &ndash; Vermont</option>
+                <option value="VA">VA &ndash; Virginia</option>
+                <option value="WA">WA &ndash; Washington</option>
+                <option value="WV">WV &ndash; West Virginia</option>
+                <option value="WI">WI &ndash; Wisconsin</option>
+                <option value="WY">WY &ndash; Wyoming</option>
+              </select>
+
+              &nbsp;
+              <label for="zip" style="font-weight:bold;">Zip <span class="required">*</span></label>&nbsp;
+              <input class="form-input" type="text" id="zip" name="zip"
+                     minlength="5" maxlength="10" placeholder="77777" required />
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           SECTION 3 — ACCOUNT CREDENTIALS
+           ------------------------------------------------------- -->
+      <div class="section-heading">3. Account Credentials</div>
+
+      <table class="form-table">
+        <tbody>
+
+          <tr>
+            <td class="label-cell">Desired User ID <span class="required">*</span></td>
+            <td>
+              <input class="form-input medium" type="text" id="userid" name="userid"
+                     maxlength="20" placeholder="Choose a username" required />
+              <span class="field-note">Max 20 characters. Separate from your email.</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label-cell">Password <span class="required">*</span></td>
+            <td>
+              <input class="form-input medium" type="password" id="password" name="password"
+                     maxlength="30" placeholder="Create a password" required />
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label-cell">Re-enter Password <span class="required">*</span></td>
+            <td>
+              <input class="form-input medium" type="password" id="password2" name="password2"
+                     maxlength="30" placeholder="Confirm password" required />
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           SECTION 4 — MEDICAL HISTORY (Checkboxes)
+           ------------------------------------------------------- -->
+      <div class="section-heading">4. Medical History &ndash; Check All That Apply</div>
+
+      <table class="form-table">
+        <tbody>
+          <tr>
+            <td class="label-cell">Previous Illnesses</td>
+            <td>
+              <div class="check-group">
+                <label><input type="checkbox" name="illness" value="chickenpox" /> Chicken Pox</label>
+                <label><input type="checkbox" name="illness" value="measles" />    Measles</label>
+                <label><input type="checkbox" name="illness" value="covid19" />    COVID-19</label>
+                <label><input type="checkbox" name="illness" value="smallpox" />   Small Pox</label>
+                <label><input type="checkbox" name="illness" value="tetanus" />    Tetanus</label>
+                <label><input type="checkbox" name="illness" value="flu" />        Seasonal Flu</label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           SECTION 5 — RADIO BUTTONS (at least 3 sets)
+           ------------------------------------------------------- -->
+      <div class="section-heading">5. General Health Information</div>
+
+      <table class="form-table">
+        <tbody>
+
+          <!-- Radio set 1: Gender -->
+          <tr>
+            <td class="label-cell">Gender <span class="required">*</span></td>
+            <td>
+              <div class="radio-group">
+                <label><input type="radio" name="gender" value="male"   required /> Male</label>
+                <label><input type="radio" name="gender" value="female"          /> Female</label>
+                <label><input type="radio" name="gender" value="nonbinary"       /> Non-binary</label>
+                <label><input type="radio" name="gender" value="prefer-not"      /> Prefer not to say</label>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Radio set 2: Vaccinated -->
+          <tr>
+            <td class="label-cell">Fully Vaccinated? <span class="required">*</span></td>
+            <td>
+              <div class="radio-group">
+                <label><input type="radio" name="vaccinated" value="yes" required /> Yes</label>
+                <label><input type="radio" name="vaccinated" value="no"           /> No</label>
+                <label><input type="radio" name="vaccinated" value="partial"      /> Partially</label>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Radio set 3: Insurance -->
+          <tr>
+            <td class="label-cell">Do You Have Insurance? <span class="required">*</span></td>
+            <td>
+              <div class="radio-group">
+                <label><input type="radio" name="insurance" value="yes" required /> Yes</label>
+                <label><input type="radio" name="insurance" value="no"           /> No</label>
+                <label><input type="radio" name="insurance" value="medicaid"     /> Medicaid / Medicare</label>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Radio set 4: Primary care physician -->
+          <tr>
+            <td class="label-cell">Do You Have a Primary Physician?</td>
+            <td>
+              <div class="radio-group">
+                <label><input type="radio" name="haspcp" value="yes" /> Yes</label>
+                <label><input type="radio" name="haspcp" value="no"  /> No</label>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           SECTION 6 — RANGE SLIDER
+           ------------------------------------------------------- -->
+      <div class="section-heading">6. Current Health Self-Assessment</div>
+
+      <table class="form-table">
+        <tbody>
+          <tr>
+            <td class="label-cell">Overall Health <span class="required">*</span></td>
+            <td>
+              <!-- Slider: 1 (poor) to 10 (excellent) -->
+              <span class="field-note">1 = Poor</span>&nbsp;
+              <input type="range" id="healthscore" name="healthscore"
+                     min="1" max="10" value="5"
+                     oninput="document.getElementById('healthval').textContent = this.value" />
+              &nbsp;<span class="field-note">10 = Excellent</span>
+              &nbsp;&nbsp;
+              <strong>Current: <span id="healthval">5</span></strong>
+            </td>
+          </tr>
+
+          <!-- Text area: describe current symptoms -->
+          <tr>
+            <td class="label-cell">Current Symptoms</td>
+            <td>
+              <textarea class="form-textarea" id="symptoms" name="symptoms"
+                        rows="4" cols="50"
+                        placeholder="Please describe your current symptoms or reason for visit..."></textarea>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+      <!-- -------------------------------------------------------
+           FORM BUTTONS
+           ------------------------------------------------------- -->
+      <div class="section-heading">7. Submit Your Registration</div>
+
+      <table class="form-table">
+        <tbody>
+          <tr>
+            <td class="label-cell"></td>
+            <td>
+              <div class="btn-row">
+                <!-- Reset button clears the form -->
+                <input class="btn btn-reset" type="reset"   value="CLEAR AND START OVER" />
+                <!-- Submit sends to thankyou.html -->
+                <input class="btn btn-submit" type="submit" value="Submit Registration" />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </form>
+    <!-- END FORM -->
+
+  </div>
+  <!-- END FORM CONTAINER -->
+
+
+  <!-- ===================================================================
+       FOOTER DIVISION
+       =================================================================== -->
+  <div id="footer">
+
+    <!-- Left: company address -->
+    <div id="footer-address">
+      <strong>2nd Colony Health Center</strong><br />
+      PO Box 18881<br />
+      Sugar Land, TX&nbsp;&nbsp;77496
+    </div>
+
+    <!-- Center: Contact Us button (clickable element required) -->
+    <div>
+      <button class="btn-contact"
+              onclick="window.location.href='mailto:info@2ndcolonyhealth.com'">
+        &#9993;&nbsp; Contact Us
+      </button>
+    </div>
+
+    <!-- Right: social links -->
+    <div id="footer-social">
+      <a href="https://www.facebook.com"  target="_blank" style="color:#a8cce0;">Facebook</a> |
+      <a href="https://www.twitter.com"   target="_blank" style="color:#a8cce0;">Twitter</a>  |
+      <a href="https://www.instagram.com" target="_blank" style="color:#a8cce0;">Instagram</a>
+    </div>
+
+  </div>
+  <!-- END FOOTER -->
+
+</div>
+<!-- END PAGE WRAPPER -->
+
+<!-- ===================================================================
+     END OF DOCUMENT: patient-form.html
+     =================================================================== -->
+</body>
+</html>
